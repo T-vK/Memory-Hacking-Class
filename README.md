@@ -1,4 +1,6 @@
-## C++ Memory Class
+## C++ Memory Hacking Class
+Very easy to use class to read and modify other processes memory.  
+And the best thing is: it supports multi-level-pointers out of the box!
 
 #### Example usage
 
@@ -13,8 +15,8 @@ int main() {
     HANDLE processHandle;
     int baseAddress;
     
-    /////////////////////////////////////////////////////////////////////////////
-    /* Note: These pointers/offsets probably outdatd by the time you read this */
+    //////////////////////////////////////////////////////////////////////////////////
+    /* Note: These pointers/offsets are probably outdated by the time you read this */
     
     int GAME_VERSION_MODULE_OFFSET = 0x2A1D738;
     
@@ -22,7 +24,7 @@ int main() {
         int HEALTH_OFFSET = 0x124;
         int MANA_OFFSET = 0x190;
         
-    /////////////////////////////////////////////////////////////////////////
+    //////////////////////////////////////////////////////////////////////////////////
     
     Memory Memory;
     Memory.GetDebugPrivileges();
