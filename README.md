@@ -1,5 +1,5 @@
 ## C++ Memory Hacking Class
-Very easy to use class to read and modify other processes memory.  
+Very easy to use class to read and modify other processes memory on Windows.  
 And the best thing is: it supports multi-level-pointers out of the box!
 
 #### Example usage
