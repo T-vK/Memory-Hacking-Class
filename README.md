@@ -6,14 +6,14 @@ And the best thing is: it supports multi-level-pointers out of the box!
 
 ```C++
 #include "Memory.hpp"
-using std::string;
+#include <iostream>
 
 int main() {
     SetConsoleTitle("Memory Class Test");
-    char* TARGET_PROCESS_NAME = "League of Legends.exe";
+    std::string TARGET_PROCESS_NAME = "League of Legends.exe";
     
     HANDLE processHandle;
-    int baseAddress;
+    long baseAddress;
     
     //////////////////////////////////////////////////////////////////////////////////
     /* Note: These pointers/offsets are probably outdated by the time you read this */
@@ -28,10 +28,11 @@ int main() {
     
     Memory Memory;
     Memory.GetDebugPrivileges();
-    processId = Memory.GetProcessId(TARGET_PROCESS_NAME);
+	const char* TARGET_PROCESS_NAME2 = TARGET_PROCESS_NAME.c_str();
+    DWORD processId = Memory.GetProcessId(TARGET_PROCESS_NAME2);
     processHandle = OpenProcess(PROCESS_ALL_ACCESS, false, processId);
     
-    baseAddress = Memory.GetModuleBase(processHandle, (string)TARGET_PROCESS_NAME);
+    baseAddress = Memory.GetModuleBase(processHandle, TARGET_PROCESS_NAME);
     std::cout << "Base address for module \"" << TARGET_PROCESS_NAME << "\" is " << baseAddress << " (in dec)..."<< std::endl;
     
     int playersAddress =     baseAddress + PLAYERS_MODULE_OFFSET;
@@ -43,13 +44,13 @@ int main() {
     float playerOneHealth = Memory.ReadFloat(processHandle, playerOneAddress + HEALTH_OFFSET);
     float playerOneMana =   Memory.ReadFloat(processHandle, playerOneAddress + MANA_OFFSET);
     
-    string gameVersion = Memory.ReadText(processHandle, gameVersionAddress);
+    std::string gameVersion = Memory.ReadText(processHandle, gameVersionAddress);
     
     std::cout << "Game version: " << gameVersionAddress << std::endl;
-    std::cout << "Player one has " << playerOneHealth << " health!" std::endl;
-    std::cout << "Player one has " << playerOneMana << " mana!" std::endl;
+    std::cout << "Player one has " << playerOneHealth << " health!" << std::endl;
+    std::cout << "Player one has " << playerOneMana << " mana!" << std::endl;
     
-    cin.get();
+    std::cin.get();
     return 0;
 }
 ```
