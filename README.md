@@ -10,6 +10,9 @@ The gcc branch has only been tested for g++. (Use: `g++ -o Example2.exe Memory.c
 I have included a simple test program `Example2.cpp`. It simply looks for a notepad.exe process and reads out the current font size.  
 It has only been tested on a 64 bit Windows 10 so far.
 
+#### g++
+To check out the gcc branch use: `git clone -b gcc git://github.com/T-vK/Memory-Hacking-Class.git`
+
 #### Example usage
 
 ```C++
