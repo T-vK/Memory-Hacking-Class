@@ -5,9 +5,6 @@ int main() {
     SetConsoleTitle("Memory Class Test");
     std::string TARGET_PROCESS_NAME = "League of Legends.exe";
     
-    HANDLE processHandle;
-    long baseAddress;
-    
     //////////////////////////////////////////////////////////////////////////////////
     /* Note: These pointers/offsets are probably outdated by the time you read this */
     
@@ -21,25 +18,25 @@ int main() {
     
     Memory Memory;
     Memory.GetDebugPrivileges();
-	const char* TARGET_PROCESS_NAME2 = TARGET_PROCESS_NAME.c_str();
+    const char* TARGET_PROCESS_NAME2 = TARGET_PROCESS_NAME.c_str();
     DWORD processId = Memory.GetProcessId(TARGET_PROCESS_NAME2);
-    processHandle = OpenProcess(PROCESS_ALL_ACCESS, false, processId);
+    HANDLE processHandle = OpenProcess(PROCESS_ALL_ACCESS, false, processId);
     
-    baseAddress = Memory.GetModuleBase(processHandle, TARGET_PROCESS_NAME);
-    std::cout << "Base address for module \"" << TARGET_PROCESS_NAME << "\" is " << baseAddress << " (in dec)..."<< std::endl;
+    long baseAddress = Memory.GetModuleBase(processHandle, TARGET_PROCESS_NAME);
+    std::cout << "Base address for module \"" << TARGET_PROCESS_NAME << "\" is " << baseAddress << " (in dec)..." << std::endl;
     
-    int playersAddress =     baseAddress + PLAYERS_MODULE_OFFSET;
-    int gameVersionAddress = baseAddress + GAME_VERSION_MODULE_OFFSET;
+    long playersAddress =     baseAddress + PLAYERS_MODULE_OFFSET;
+    long gameVersionAddress = baseAddress + GAME_VERSION_MODULE_OFFSET;
     
     int ptrOffset[] = {0x0}; //0x0 offset is for player one. 0x4 would be player 2 etc
-    int playerOneAddress = Memory.ReadPointerInt(processHandle, playersAddress, ptrOffset, 1);
+    long playerOneAddress = Memory.ReadPointerInt(processHandle, playersAddress, ptrOffset, 1);
     
     float playerOneHealth = Memory.ReadFloat(processHandle, playerOneAddress + HEALTH_OFFSET);
     float playerOneMana =   Memory.ReadFloat(processHandle, playerOneAddress + MANA_OFFSET);
     
     std::string gameVersion = Memory.ReadText(processHandle, gameVersionAddress);
     
-    std::cout << "Game version: " << gameVersionAddress << std::endl;
+    std::cout << "Game version: " << gameVersion << std::endl;
     std::cout << "Player one has " << playerOneHealth << " health!" << std::endl;
     std::cout << "Player one has " << playerOneMana << " mana!" << std::endl;
     
