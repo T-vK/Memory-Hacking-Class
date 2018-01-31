@@ -1,18 +1,17 @@
 #pragma once
-#include "stdafx.hpp"
 #include "Memory.hpp"
 #include <Windows.h>
 #include <TlHelp32.h>
 #include <string>
 #include <psapi.h>
+#include <iostream>
 #pragma comment(lib, "psapi")
-using std::string;
 
 class Memory
 {
 public:
-    int GetProcessId(char* processName);
-    int GetModuleBase(HANDLE processHandle, string &sModuleName);
+    int GetProcessId(const char* processName);
+    long GetModuleBase(HANDLE processHandle, std::string &sModuleName);
     BOOL SetPrivilege(HANDLE hToken, LPCTSTR lpszPrivilege, BOOL bEnablePrivilege);
     BOOL GetDebugPrivileges(void);
     int ReadInt(HANDLE processHandle, int address);
